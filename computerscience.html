@@ -1,0 +1,770 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Computer Science · Full Map</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#1a1a1a; font-family:'Inter',system-ui,sans-serif; overflow:hidden; height:100vh; width:100vw; color:#e0e0e0; }
+    #search-wrapper {
+      position:absolute; top:20px; left:50%; transform:translateX(-50%); z-index:10;
+      display:flex; align-items:center; background:#242424; border:1px solid #3a3a3a;
+      border-radius:28px; padding:7px 18px; box-shadow:0 6px 20px rgba(0,0,0,0.6); transition:0.2s;
+    }
+    #search-wrapper:focus-within { border-color:#7a7a7a; box-shadow:0 6px 24px rgba(150,150,150,0.15); }
+    #search-icon { margin-right:8px; opacity:0.6; font-size:16px; user-select:none; }
+    #search-input { background:transparent; border:none; outline:none; color:#e0e0e0; font-size:14px; width:220px; font-family:inherit; letter-spacing:0.3px; }
+    #search-input::placeholder { color:#6a6a6a; }
+    #clear-search { background:none; border:none; color:#7a7a7a; cursor:pointer; font-size:16px; margin-left:8px; display:none; transition:0.2s; line-height:1; }
+    #clear-search:hover { color:#ccc; }
+    #chart { width:100%; height:100%; display:block; background:#1a1a1a; }
+    .node-group { cursor:pointer; }
+    .node-rect { transition:all 0.25s ease; stroke-width:1.5px; stroke:rgba(255,255,255,0.08); }
+    .node-rect.highlight { stroke:#c0a060 !important; stroke-width:2.2px !important; filter:drop-shadow(0 0 8px #c0a06066); }
+    .node-text { fill:#f0f0f0; font-size:11px; font-weight:450; pointer-events:none; user-select:none; letter-spacing:0.3px; }
+    .link { fill:none; stroke:#3e3e3e; stroke-width:1.3px; transition:stroke 0.2s; }
+    .link.highlight-link { stroke:#c0a060; stroke-width:2px; filter:drop-shadow(0 0 5px #c0a06055); }
+    .external-icon { fill:#999; cursor:pointer; pointer-events:all; transition:0.2s; }
+    .external-icon:hover { fill:#ddd; }
+    .root-node-group { opacity:0; pointer-events:none; }
+  </style>
+</head>
+<body>
+  <div id="search-wrapper">
+    <span id="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Search languages, tools, algorithms, databases..." autocomplete="off">
+    <button id="clear-search">✕</button>
+  </div>
+  <svg id="chart" width="390" height="670" viewBox="0 0 890 1228.7" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><g transform="translate(140,335) scale(0.65)"><path class="link" d="M0,0 C135,0 135,-959.1 270,-959.1"></path><path class="link" d="M0,0 C135,0 135,-607.1999999999999 270,-607.1999999999999"></path><path class="link" d="M0,0 C135,0 135,-404.8 270,-404.8"></path><path class="link" d="M0,0 C135,0 135,-172.5 270,-172.5"></path><path class="link" d="M0,0 C135,0 135,59.80000000000003 270,59.80000000000003"></path><path class="link" d="M0,0 C135,0 135,202.4000000000001 270,202.4000000000001"></path><path class="link" d="M0,0 C135,0 135,374.90000000000026 270,374.90000000000026"></path><path class="link" d="M0,0 C135,0 135,637.1 270,637.1"></path><path class="link" d="M0,0 C135,0 135,959.1 270,959.1"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-1138.5 540,-1138.5"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-1078.7 540,-1078.7"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-1018.9 540,-1018.9"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-959.1 540,-959.1"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-899.3000000000001 540,-899.3000000000001"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-839.5 540,-839.5"></path><path class="link" d="M270,-959.1 C405,-959.1 405,-779.6999999999999 540,-779.6999999999999"></path><path class="link" d="M270,-607.1999999999999 C405,-607.1999999999999 405,-696.9 540,-696.9"></path><path class="link" d="M270,-607.1999999999999 C405,-607.1999999999999 405,-637.1 540,-637.1"></path><path class="link" d="M270,-607.1999999999999 C405,-607.1999999999999 405,-577.3000000000001 540,-577.3000000000001"></path><path class="link" d="M270,-607.1999999999999 C405,-607.1999999999999 405,-517.5 540,-517.5"></path><path class="link" d="M270,-404.8 C405,-404.8 405,-434.7 540,-434.7"></path><path class="link" d="M270,-404.8 C405,-404.8 405,-374.8999999999999 540,-374.8999999999999"></path><path class="link" d="M270,-172.5 C405,-172.5 405,-292.0999999999999 540,-292.0999999999999"></path><path class="link" d="M270,-172.5 C405,-172.5 405,-232.2999999999999 540,-232.2999999999999"></path><path class="link" d="M270,-172.5 C405,-172.5 405,-172.4999999999999 540,-172.4999999999999"></path><path class="link" d="M270,-172.5 C405,-172.5 405,-112.69999999999989 540,-112.69999999999989"></path><path class="link" d="M270,-172.5 C405,-172.5 405,-52.89999999999989 540,-52.89999999999989"></path><path class="link" d="M270,59.80000000000003 C405,59.80000000000003 405,29.900000000000098 540,29.900000000000098"></path><path class="link" d="M270,59.80000000000003 C405,59.80000000000003 405,89.7000000000001 540,89.7000000000001"></path><path class="link" d="M270,202.4000000000001 C405,202.4000000000001 405,172.50000000000017 540,172.50000000000017"></path><path class="link" d="M270,202.4000000000001 C405,202.4000000000001 405,232.30000000000015 540,232.30000000000015"></path><path class="link" d="M270,374.90000000000026 C405,374.90000000000026 405,315.10000000000025 540,315.10000000000025"></path><path class="link" d="M270,374.90000000000026 C405,374.90000000000026 405,374.90000000000026 540,374.90000000000026"></path><path class="link" d="M270,374.90000000000026 C405,374.90000000000026 405,434.7000000000002 540,434.7000000000002"></path><path class="link" d="M270,637.1 C405,637.1 405,517.5 540,517.5"></path><path class="link" d="M270,637.1 C405,637.1 405,577.3000000000001 540,577.3000000000001"></path><path class="link" d="M270,637.1 C405,637.1 405,637.1 540,637.1"></path><path class="link" d="M270,637.1 C405,637.1 405,696.9 540,696.9"></path><path class="link" d="M270,637.1 C405,637.1 405,756.6999999999999 540,756.6999999999999"></path><path class="link" d="M270,959.1 C405,959.1 405,839.5 540,839.5"></path><path class="link" d="M270,959.1 C405,959.1 405,899.3000000000001 540,899.3000000000001"></path><path class="link" d="M270,959.1 C405,959.1 405,959.1 540,959.1"></path><path class="link" d="M270,959.1 C405,959.1 405,1018.9 540,1018.9"></path><path class="link" d="M270,959.1 C405,959.1 405,1078.7 540,1078.7"></path><g class="node-group root-node-group" transform="translate(0,0)"><rect class="node-rect" x="-69.078125" y="-16" width="138.15625" height="32" rx="16" ry="16" fill="#1f1f1f"></rect><text class="node-text" text-anchor="middle" dy="5">Computer Science</text></g><g class="node-group" transform="translate(270,-959.1)"><rect class="node-rect" x="-127.84375" y="-16" width="255.6875" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">💻 Programming Paradigms &amp; Languages</text></g><g class="node-group" transform="translate(270,-607.1999999999999)"><rect class="node-rect" x="-57.328125" y="-16" width="114.65625" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🗄️ Databases</text></g><g class="node-group" transform="translate(270,-404.8)"><rect class="node-rect" x="-90.578125" y="-16" width="181.15625" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🌐 Networking &amp; Protocols</text></g><g class="node-group" transform="translate(270,-172.5)"><rect class="node-rect" x="-78.984375" y="-16" width="157.96875" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🖥️ Operating Systems</text></g><g class="node-group" transform="translate(270,59.80000000000003)"><rect class="node-rect" x="-65.96875" y="-16" width="131.9375" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🔒 Cybersecurity</text></g><g class="node-group" transform="translate(270,202.4000000000001)"><rect class="node-rect" x="-82.265625" y="-16" width="164.53125" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🤖 Artificial Intelligence</text></g><g class="node-group" transform="translate(270,374.90000000000026)"><rect class="node-rect" x="-84.890625" y="-16" width="169.78125" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🛠️ Software Engineering</text></g><g class="node-group" transform="translate(270,637.1)"><rect class="node-rect" x="-89.140625" y="-16" width="178.28125" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">📐 Theory of Computation</text></g><g class="node-group" transform="translate(270,959.1)"><rect class="node-rect" x="-88.765625" y="-16" width="177.53125" height="32" rx="16" ry="16" fill="#2b2b2b"></rect><text class="node-text" text-anchor="middle" dy="5">🧠 Computer Architecture</text></g><g class="node-group" transform="translate(540,-1138.5)"><rect class="node-rect" x="-63.75" y="-16" width="127.5" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Object-Oriented</text></g><g class="node-group" transform="translate(540,-1078.7)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Functional</text></g><g class="node-group" transform="translate(540,-1018.9)"><rect class="node-rect" x="-78.34375" y="-16" width="156.6875" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Procedural &amp; Systems</text></g><g class="node-group" transform="translate(540,-959.1)"><rect class="node-rect" x="-73.9375" y="-16" width="147.875" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Scripting &amp; Dynamic</text></g><g class="node-group" transform="translate(540,-899.3000000000001)"><rect class="node-rect" x="-71.53125" y="-16" width="143.0625" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Declarative &amp; Logic</text></g><g class="node-group" transform="translate(540,-839.5)"><rect class="node-rect" x="-91.0625" y="-16" width="182.125" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Concurrent &amp; Event-Driven</text></g><g class="node-group" transform="translate(540,-779.6999999999999)"><rect class="node-rect" x="-63.734375" y="-16" width="127.46875" height="32" rx="16" ry="16" fill="#333333"></rect><text class="node-text" text-anchor="middle" dy="5">Smart Contracts</text></g><g class="node-group" transform="translate(540,-696.9)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">Relational</text></g><g class="node-group" transform="translate(540,-637.1)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">NoSQL</text></g><g class="node-group" transform="translate(540,-577.3000000000001)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">NewSQL</text></g><g class="node-group" transform="translate(540,-517.5)"><rect class="node-rect" x="-51.875" y="-16" width="103.75" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">Time Series</text></g><g class="node-group" transform="translate(540,-434.7)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">Models</text></g><g class="node-group" transform="translate(540,-374.8999999999999)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">Protocols</text></g><g class="node-group" transform="translate(540,-292.0999999999999)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Linux</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,-232.2999999999999)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Windows</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,-172.4999999999999)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">macOS</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,-112.69999999999989)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Unix</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,-52.89999999999989)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">FreeBSD</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,29.900000000000098)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#4a4a4a"></rect><text class="node-text" text-anchor="middle" dy="5">Encryption</text></g><g class="node-group" transform="translate(540,89.7000000000001)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Tools</text></g><g class="node-group" transform="translate(540,172.50000000000017)"><rect class="node-rect" x="-53.1875" y="-16" width="106.375" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Frameworks</text></g><g class="node-group" transform="translate(540,232.30000000000015)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#525252"></rect><text class="node-text" text-anchor="middle" dy="5">Algorithms</text></g><g class="node-group" transform="translate(540,315.10000000000025)"><rect class="node-rect" x="-61.625" y="-16" width="123.25" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">Version Control</text></g><g class="node-group" transform="translate(540,374.90000000000026)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#555555"></rect><text class="node-text" text-anchor="middle" dy="5">CI/CD</text></g><g class="node-group" transform="translate(540,434.7000000000002)"><rect class="node-rect" x="-59.875" y="-16" width="119.75" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Methodologies</text></g><g class="node-group" transform="translate(540,517.5)"><rect class="node-rect" x="-61.515625" y="-16" width="123.03125" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Turing Machine</text><text class="external-icon" dy="5" font-size="13px" dx="49.515625">↗</text></g><g class="node-group" transform="translate(540,577.3000000000001)"><rect class="node-rect" x="-65.8125" y="-16" width="131.625" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Lambda Calculus</text><text class="external-icon" dy="5" font-size="13px" dx="53.8125">↗</text></g><g class="node-group" transform="translate(540,637.1)"><rect class="node-rect" x="-62.1875" y="-16" width="124.375" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Finite Automata</text><text class="external-icon" dy="5" font-size="13px" dx="50.1875">↗</text></g><g class="node-group" transform="translate(540,696.9)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">P vs NP</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,756.6999999999999)"><rect class="node-rect" x="-57.609375" y="-16" width="115.21875" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Computability</text><text class="external-icon" dy="5" font-size="13px" dx="45.609375">↗</text></g><g class="node-group" transform="translate(540,839.5)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">CPU</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,899.3000000000001)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">GPU</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g><g class="node-group" transform="translate(540,959.1)"><rect class="node-rect" x="-68.96875" y="-16" width="137.9375" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Memory Hierarchy</text><text class="external-icon" dy="5" font-size="13px" dx="56.96875">↗</text></g><g class="node-group" transform="translate(540,1018.9)"><rect class="node-rect" x="-59.265625" y="-16" width="118.53125" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Instruction Set</text><text class="external-icon" dy="5" font-size="13px" dx="47.265625">↗</text></g><g class="node-group" transform="translate(540,1078.7)"><rect class="node-rect" x="-50" y="-16" width="100" height="32" rx="16" ry="16" fill="#5e5e5e"></rect><text class="node-text" text-anchor="middle" dy="5">Pipelining</text><text class="external-icon" dy="5" font-size="13px" dx="38">↗</text></g></g></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    (function() {
+      // ──────────────────── TOOLS MAP (language -> tools) ────────────────────
+      const languageTools = {
+        "Assembly": [{n:"NASM",u:"https://www.nasm.us/"},{n:"MASM",u:"https://www.masm32.com/"},{n:"GAS",u:"https://www.gnu.org/software/binutils/"}],
+        "C": [{n:"GCC",u:"https://gcc.gnu.org/"},{n:"Clang",u:"https://clang.llvm.org/"},{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"},{n:"Make",u:"https://www.gnu.org/software/make/"},{n:"CMake",u:"https://cmake.org/"},{n:"GDB",u:"https://www.gnu.org/software/gdb/"}],
+        "C++": [{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"},{n:"CLion",u:"https://www.jetbrains.com/clion/"},{n:"CMake",u:"https://cmake.org/"},{n:"vcpkg",u:"https://vcpkg.io/"},{n:"GDB",u:"https://www.gnu.org/software/gdb/"}],
+        "Java": [{n:"IntelliJ IDEA",u:"https://www.jetbrains.com/idea/"},{n:"Eclipse",u:"https://www.eclipse.org/"},{n:"NetBeans",u:"https://netbeans.apache.org/"},{n:"Maven",u:"https://maven.apache.org/"},{n:"Gradle",u:"https://gradle.org/"},{n:"JUnit",u:"https://junit.org/"}],
+        "Python": [{n:"PyCharm",u:"https://www.jetbrains.com/pycharm/"},{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Jupyter",u:"https://jupyter.org/"},{n:"pip",u:"https://pip.pypa.io/"},{n:"conda",u:"https://docs.conda.io/"},{n:"poetry",u:"https://python-poetry.org/"}],
+        "C#": [{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"},{n:"Rider",u:"https://www.jetbrains.com/rider/"},{n:"NuGet",u:"https://www.nuget.org/"},{n:"MSBuild",u:"https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild"}],
+        "Ruby": [{n:"RubyMine",u:"https://www.jetbrains.com/ruby/"},{n:"RVM",u:"https://rvm.io/"},{n:"Bundler",u:"https://bundler.io/"},{n:"RSpec",u:"https://rspec.info/"}],
+        "Swift": [{n:"Xcode",u:"https://developer.apple.com/xcode/"},{n:"AppCode",u:"https://www.jetbrains.com/objc/"},{n:"CocoaPods",u:"https://cocoapods.org/"}],
+        "Kotlin": [{n:"IntelliJ IDEA",u:"https://www.jetbrains.com/idea/"},{n:"Android Studio",u:"https://developer.android.com/studio"},{n:"Gradle",u:"https://gradle.org/"}],
+        "TypeScript": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"WebStorm",u:"https://www.jetbrains.com/webstorm/"},{n:"ts-node",u:"https://typestrong.org/ts-node/"}],
+        "JavaScript": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"WebStorm",u:"https://www.jetbrains.com/webstorm/"},{n:"npm",u:"https://www.npmjs.com/"},{n:"yarn",u:"https://yarnpkg.com/"},{n:"pnpm",u:"https://pnpm.io/"}],
+        "PHP": [{n:"PhpStorm",u:"https://www.jetbrains.com/phpstorm/"},{n:"Composer",u:"https://getcomposer.org/"},{n:"PHPUnit",u:"https://phpunit.de/"}],
+        "Go": [{n:"GoLand",u:"https://www.jetbrains.com/go/"},{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"delve",u:"https://github.com/go-delve/delve"}],
+        "Rust": [{n:"RustRover",u:"https://www.jetbrains.com/rust/"},{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Cargo",u:"https://doc.rust-lang.org/cargo/"}],
+        "Haskell": [{n:"GHCup",u:"https://www.haskell.org/ghcup/"},{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Stack",u:"https://docs.haskellstack.org/"}],
+        "Scala": [{n:"IntelliJ IDEA",u:"https://www.jetbrains.com/idea/"},{n:"sbt",u:"https://www.scala-sbt.org/"}],
+        "Elixir": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Mix",u:"https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html"}],
+        "Clojure": [{n:"IntelliJ / Cursive",u:"https://cursive-ide.com/"},{n:"Leiningen",u:"https://leiningen.org/"}],
+        "F#": [{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"},{n:"Rider",u:"https://www.jetbrains.com/rider/"}],
+        "OCaml": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"opam",u:"https://opam.ocaml.org/"}],
+        "Erlang": [{n:"IntelliJ Erlang",u:"https://plugins.jetbrains.com/plugin/7083-erlang"},{n:"rebar3",u:"https://www.rebar3.org/"}],
+        "Elm": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"elm-format",u:"https://github.com/avh4/elm-format"}],
+        "Dart": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Android Studio",u:"https://developer.android.com/studio"},{n:"pub",u:"https://dart.dev/tools/pub"}],
+        "Julia": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Pkg",u:"https://pkgdocs.julialang.org/"}],
+        "R": [{n:"RStudio",u:"https://www.rstudio.com/"},{n:"Rtools",u:"https://cran.r-project.org/bin/windows/Rtools/"}],
+        "SQL": [{n:"DBeaver",u:"https://dbeaver.io/"},{n:"DataGrip",u:"https://www.jetbrains.com/datagrip/"}],
+        "Perl": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"cpanm",u:"https://cpanmin.us/"}],
+        "Lua": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"LuaRocks",u:"https://luarocks.org/"}],
+        "Zig": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"zig build",u:"https://ziglang.org/learn/build-system/"}],
+        "Nim": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"nimble",u:"https://github.com/nim-lang/nimble"}],
+        "D": [{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"},{n:"DUB",u:"https://code.dlang.org/"}],
+        "Crystal": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"shards",u:"https://crystal-lang.org/reference/the_shards_command/index.html"}],
+        "V": [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"v up",u:"https://github.com/vlang/v"}],
+        "Free Pascal": [{n:"Lazarus",u:"https://www.lazarus-ide.org/"}],
+        "Racket": [{n:"DrRacket",u:"https://racket-lang.org/"}],
+        "Scheme": [{n:"Racket",u:"https://racket-lang.org/"},{n:"Chez Scheme",u:"https://cisco.github.io/ChezScheme/"}],
+        "Solidity": [{n:"Remix",u:"https://remix.ethereum.org/"},{n:"Hardhat",u:"https://hardhat.org/"}],
+        "COBOL": [{n:"GnuCOBOL",u:"https://gnucobol.sourceforge.io/"}],
+        "Fortran": [{n:"GFortran",u:"https://gcc.gnu.org/fortran/"},{n:"LAPACK",u:"https://www.netlib.org/lapack/"}],
+        "Ada": [{n:"GNAT Studio",u:"https://www.adacore.com/gnatpro/toolsuite"}],
+        "Pascal": [{n:"Lazarus",u:"https://www.lazarus-ide.org/"}],
+        "Smalltalk": [{n:"Pharo",u:"https://pharo.org/"}],
+        "Prolog": [{n:"SWI-Prolog",u:"https://www.swi-prolog.org/"}],
+        "Tcl": [{n:"Tk",u:"https://www.tcl.tk/man/tcl8.6/TkCmd/contents.html"}],
+        "Bash": [{n:"ShellCheck",u:"https://www.shellcheck.net/"}],
+        "PowerShell": [{n:"VS Code",u:"https://code.visualstudio.com/"}],
+        "Objective-C": [{n:"Xcode",u:"https://developer.apple.com/xcode/"}],
+        "Groovy": [{n:"IntelliJ IDEA",u:"https://www.jetbrains.com/idea/"},{n:"Gradle",u:"https://gradle.org/"}],
+        "VB.NET": [{n:"Visual Studio",u:"https://visualstudio.microsoft.com/"}],
+        "Eiffel": [{n:"EiffelStudio",u:"https://www.eiffel.com/eiffelstudio/"}],
+        "MATLAB": [{n:"MATLAB",u:"https://www.mathworks.com/products/matlab.html"}],
+        "SAS": [{n:"SAS Studio",u:"https://www.sas.com/en_us/software/studio.html"}],
+        "Stata": [{n:"Stata",u:"https://www.stata.com/"}],
+      };
+      function getToolsNode(lang) {
+        const tools = languageTools[lang] || [{n:"VS Code",u:"https://code.visualstudio.com/"},{n:"Git",u:"https://git-scm.com/"}];
+        return { name:"🛠️ Tools & IDEs", level:"tool-category", children: tools.map(t=>({name:t.n, level:"tool", url:t.u})) };
+      }
+
+      // ──────────────────── ALGORITHMS SUBTREE (extensive) ────────────────────
+      function getAlgorithmsNode() {
+        return {
+          name:"⚡ Algorithms", level:"algo-category", children:[
+            { name:"Sorting", level:"algo-category", children:[
+              {name:"Bubble Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Bubble_sort"},
+              {name:"Selection Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Selection_sort"},
+              {name:"Insertion Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Insertion_sort"},
+              {name:"Merge Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Merge_sort"},
+              {name:"Quick Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Quicksort"},
+              {name:"Heap Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Heapsort"},
+              {name:"Counting Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Counting_sort"},
+              {name:"Radix Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Radix_sort"},
+              {name:"Bucket Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Bucket_sort"},
+              {name:"Shell Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Shellsort"},
+              {name:"Timsort",level:"algo",url:"https://en.wikipedia.org/wiki/Timsort"},
+              {name:"IntroSort",level:"algo",url:"https://en.wikipedia.org/wiki/Introsort"},
+              {name:"Comb Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Comb_sort"},
+              {name:"Pancake Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Pancake_sorting"},
+              {name:"Bitonic Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Bitonic_sorter"},
+              {name:"Gnome Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Gnome_sort"}
+            ]},
+            { name:"Searching", level:"algo-category", children:[
+              {name:"Linear Search",level:"algo",url:"https://en.wikipedia.org/wiki/Linear_search"},
+              {name:"Binary Search",level:"algo",url:"https://en.wikipedia.org/wiki/Binary_search"},
+              {name:"Jump Search",level:"algo",url:"https://en.wikipedia.org/wiki/Jump_search"},
+              {name:"Exponential Search",level:"algo",url:"https://en.wikipedia.org/wiki/Exponential_search"},
+              {name:"Fibonacci Search",level:"algo",url:"https://en.wikipedia.org/wiki/Fibonacci_search_technique"},
+              {name:"Interpolation Search",level:"algo",url:"https://en.wikipedia.org/wiki/Interpolation_search"},
+              {name:"Ternary Search",level:"algo",url:"https://en.wikipedia.org/wiki/Ternary_search"}
+            ]},
+            { name:"Graph Algorithms", level:"algo-category", children:[
+              {name:"BFS",level:"algo",url:"https://en.wikipedia.org/wiki/Breadth-first_search"},
+              {name:"DFS",level:"algo",url:"https://en.wikipedia.org/wiki/Depth-first_search"},
+              {name:"Dijkstra",level:"algo",url:"https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"},
+              {name:"Bellman-Ford",level:"algo",url:"https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm"},
+              {name:"Floyd-Warshall",level:"algo",url:"https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm"},
+              {name:"Kruskal MST",level:"algo",url:"https://en.wikipedia.org/wiki/Kruskal%27s_algorithm"},
+              {name:"Prim MST",level:"algo",url:"https://en.wikipedia.org/wiki/Prim%27s_algorithm"},
+              {name:"Topological Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Topological_sorting"},
+              {name:"A* Search",level:"algo",url:"https://en.wikipedia.org/wiki/A*_search_algorithm"},
+              {name:"Tarjan SCC",level:"algo",url:"https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm"},
+              {name:"Edmonds-Karp",level:"algo",url:"https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm"},
+              {name:"Ford-Fulkerson",level:"algo",url:"https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm"},
+              {name:"Bipartite Matching",level:"algo",url:"https://en.wikipedia.org/wiki/Matching_(graph_theory)"},
+              {name:"Eulerian Path",level:"algo",url:"https://en.wikipedia.org/wiki/Eulerian_path"}
+            ]},
+            { name:"Dynamic Programming", level:"algo-category", children:[
+              {name:"0/1 Knapsack",level:"algo",url:"https://en.wikipedia.org/wiki/Knapsack_problem"},
+              {name:"LCS",level:"algo",url:"https://en.wikipedia.org/wiki/Longest_common_subsequence"},
+              {name:"LIS",level:"algo",url:"https://en.wikipedia.org/wiki/Longest_increasing_subsequence"},
+              {name:"Edit Distance",level:"algo",url:"https://en.wikipedia.org/wiki/Levenshtein_distance"},
+              {name:"Matrix Chain Multiplication",level:"algo",url:"https://en.wikipedia.org/wiki/Matrix_chain_multiplication"},
+              {name:"Coin Change",level:"algo",url:"https://en.wikipedia.org/wiki/Coin_change_problem"},
+              {name:"Rod Cutting",level:"algo",url:"https://en.wikipedia.org/wiki/Cutting_stock_problem"},
+              {name:"Subset Sum",level:"algo",url:"https://en.wikipedia.org/wiki/Subset_sum_problem"},
+              {name:"Egg Dropping",level:"algo",url:"https://en.wikipedia.org/wiki/Egg_dropping_puzzle"},
+              {name:"Palindrome Partitioning",level:"algo",url:"https://en.wikipedia.org/wiki/Palindrome_partitioning"},
+              {name:"Word Break",level:"algo",url:"https://en.wikipedia.org/wiki/Word_break_problem"},
+              {name:"Box Stacking",level:"algo",url:"https://en.wikipedia.org/wiki/Box_stacking_problem"},
+              {name:"Optimal BST",level:"algo",url:"https://en.wikipedia.org/wiki/Optimal_binary_search_tree"}
+            ]},
+            { name:"Greedy", level:"algo-category", children:[
+              {name:"Huffman Coding",level:"algo",url:"https://en.wikipedia.org/wiki/Huffman_coding"},
+              {name:"Activity Selection",level:"algo",url:"https://en.wikipedia.org/wiki/Activity_selection_problem"},
+              {name:"Fractional Knapsack",level:"algo",url:"https://en.wikipedia.org/wiki/Continuous_knapsack_problem"},
+              {name:"Job Sequencing",level:"algo",url:"https://en.wikipedia.org/wiki/Job_sequencing_problem"}
+            ]},
+            { name:"Divide & Conquer", level:"algo-category", children:[
+              {name:"Merge Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Merge_sort"},
+              {name:"Quick Sort",level:"algo",url:"https://en.wikipedia.org/wiki/Quicksort"},
+              {name:"Binary Search",level:"algo",url:"https://en.wikipedia.org/wiki/Binary_search"},
+              {name:"Strassen Multiplication",level:"algo",url:"https://en.wikipedia.org/wiki/Strassen_algorithm"},
+              {name:"Closest Pair of Points",level:"algo",url:"https://en.wikipedia.org/wiki/Closest_pair_of_points_problem"}
+            ]},
+            { name:"Backtracking", level:"algo-category", children:[
+              {name:"N-Queens",level:"algo",url:"https://en.wikipedia.org/wiki/Eight_queens_puzzle"},
+              {name:"Sudoku Solver",level:"algo",url:"https://en.wikipedia.org/wiki/Sudoku_solving_algorithms"},
+              {name:"Hamiltonian Cycle",level:"algo",url:"https://en.wikipedia.org/wiki/Hamiltonian_path"},
+              {name:"Knight Tour",level:"algo",url:"https://en.wikipedia.org/wiki/Knight%27s_tour"},
+              {name:"Rat in a Maze",level:"algo",url:"https://en.wikipedia.org/wiki/Maze_solving_algorithm"},
+              {name:"M-Coloring",level:"algo",url:"https://en.wikipedia.org/wiki/Graph_coloring"},
+              {name:"Permutations",level:"algo",url:"https://en.wikipedia.org/wiki/Permutation"}
+            ]},
+            { name:"String Algorithms", level:"algo-category", children:[
+              {name:"KMP",level:"algo",url:"https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm"},
+              {name:"Rabin-Karp",level:"algo",url:"https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm"},
+              {name:"Z-Algorithm",level:"algo",url:"https://en.wikipedia.org/wiki/Z_algorithm"},
+              {name:"Manacher",level:"algo",url:"https://en.wikipedia.org/wiki/Longest_palindromic_substring"},
+              {name:"Trie",level:"algo",url:"https://en.wikipedia.org/wiki/Trie"},
+              {name:"Suffix Array",level:"algo",url:"https://en.wikipedia.org/wiki/Suffix_array"},
+              {name:"Aho-Corasick",level:"algo",url:"https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm"},
+              {name:"Boyer-Moore",level:"algo",url:"https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm"}
+            ]},
+            { name:"Number Theory", level:"algo-category", children:[
+              {name:"Sieve of Eratosthenes",level:"algo",url:"https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes"},
+              {name:"Euclidean GCD",level:"algo",url:"https://en.wikipedia.org/wiki/Euclidean_algorithm"},
+              {name:"Modular Exponentiation",level:"algo",url:"https://en.wikipedia.org/wiki/Modular_exponentiation"},
+              {name:"Miller-Rabin",level:"algo",url:"https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test"},
+              {name:"Chinese Remainder Theorem",level:"algo",url:"https://en.wikipedia.org/wiki/Chinese_remainder_theorem"},
+              {name:"Euler Totient",level:"algo",url:"https://en.wikipedia.org/wiki/Euler%27s_totient_function"}
+            ]},
+            { name:"Computational Geometry", level:"algo-category", children:[
+              {name:"Convex Hull (Graham Scan)",level:"algo",url:"https://en.wikipedia.org/wiki/Graham_scan"},
+              {name:"Line Segment Intersection",level:"algo",url:"https://en.wikipedia.org/wiki/Line_segment_intersection"},
+              {name:"Point in Polygon",level:"algo",url:"https://en.wikipedia.org/wiki/Point_in_polygon"},
+              {name:"Voronoi Diagram",level:"algo",url:"https://en.wikipedia.org/wiki/Voronoi_diagram"}
+            ]},
+            { name:"Cryptography", level:"algo-category", children:[
+              {name:"RSA",level:"algo",url:"https://en.wikipedia.org/wiki/RSA_(cryptosystem)"},
+              {name:"AES",level:"algo",url:"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard"},
+              {name:"SHA-256",level:"algo",url:"https://en.wikipedia.org/wiki/SHA-2"},
+              {name:"ECC",level:"algo",url:"https://en.wikipedia.org/wiki/Elliptic-curve_cryptography"},
+              {name:"Diffie-Hellman",level:"algo",url:"https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange"},
+              {name:"Blowfish",level:"algo",url:"https://en.wikipedia.org/wiki/Blowfish_(cipher)"}
+            ]},
+            { name:"Machine Learning", level:"algo-category", children:[
+              {name:"Linear Regression",level:"algo",url:"https://en.wikipedia.org/wiki/Linear_regression"},
+              {name:"Logistic Regression",level:"algo",url:"https://en.wikipedia.org/wiki/Logistic_regression"},
+              {name:"Decision Trees",level:"algo",url:"https://en.wikipedia.org/wiki/Decision_tree_learning"},
+              {name:"Random Forest",level:"algo",url:"https://en.wikipedia.org/wiki/Random_forest"},
+              {name:"SVM",level:"algo",url:"https://en.wikipedia.org/wiki/Support_vector_machine"},
+              {name:"K-Means",level:"algo",url:"https://en.wikipedia.org/wiki/K-means_clustering"},
+              {name:"KNN",level:"algo",url:"https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm"},
+              {name:"Naive Bayes",level:"algo",url:"https://en.wikipedia.org/wiki/Naive_Bayes_classifier"},
+              {name:"Neural Networks",level:"algo",url:"https://en.wikipedia.org/wiki/Neural_network"},
+              {name:"CNN",level:"algo",url:"https://en.wikipedia.org/wiki/Convolutional_neural_network"},
+              {name:"RNN/LSTM",level:"algo",url:"https://en.wikipedia.org/wiki/Long_short-term_memory"},
+              {name:"XGBoost",level:"algo",url:"https://en.wikipedia.org/wiki/XGBoost"},
+              {name:"PCA",level:"algo",url:"https://en.wikipedia.org/wiki/Principal_component_analysis"},
+              {name:"DBSCAN",level:"algo",url:"https://en.wikipedia.org/wiki/DBSCAN"}
+            ]},
+            { name:"Compression", level:"algo-category", children:[
+              {name:"Huffman Coding",level:"algo",url:"https://en.wikipedia.org/wiki/Huffman_coding"},
+              {name:"LZ77/LZ78",level:"algo",url:"https://en.wikipedia.org/wiki/LZ77_and_LZ78"},
+              {name:"LZW",level:"algo",url:"https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch"},
+              {name:"Run-Length Encoding",level:"algo",url:"https://en.wikipedia.org/wiki/Run-length_encoding"},
+              {name:"DEFLATE",level:"algo",url:"https://en.wikipedia.org/wiki/DEFLATE"},
+              {name:"Brotli",level:"algo",url:"https://en.wikipedia.org/wiki/Brotli"},
+              {name:"Zstandard",level:"algo",url:"https://en.wikipedia.org/wiki/Zstd"}
+            ]},
+            { name:"Probabilistic", level:"algo-category", children:[
+              {name:"Bloom Filter",level:"algo",url:"https://en.wikipedia.org/wiki/Bloom_filter"},
+              {name:"Skip List",level:"algo",url:"https://en.wikipedia.org/wiki/Skip_list"},
+              {name:"HyperLogLog",level:"algo",url:"https://en.wikipedia.org/wiki/HyperLogLog"},
+              {name:"Count-Min Sketch",level:"algo",url:"https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch"},
+              {name:"Reservoir Sampling",level:"algo",url:"https://en.wikipedia.org/wiki/Reservoir_sampling"},
+              {name:"Monte Carlo",level:"algo",url:"https://en.wikipedia.org/wiki/Monte_Carlo_method"}
+            ]}
+          ]
+        };
+      }
+
+      // ──────────────────── DATA STRUCTURES NODE ────────────────────
+      function getDataStructuresNode() {
+        return {
+          name:"📚 Data Structures", level:"datastructure-category", children:[
+            {name:"Array",level:"datastructure",url:"https://en.wikipedia.org/wiki/Array_data_structure"},
+            {name:"Linked List",level:"datastructure",url:"https://en.wikipedia.org/wiki/Linked_list"},
+            {name:"Stack",level:"datastructure",url:"https://en.wikipedia.org/wiki/Stack_(abstract_data_type)"},
+            {name:"Queue",level:"datastructure",url:"https://en.wikipedia.org/wiki/Queue_(abstract_data_type)"},
+            {name:"Hash Table",level:"datastructure",url:"https://en.wikipedia.org/wiki/Hash_table"},
+            {name:"Binary Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/Binary_tree"},
+            {name:"Binary Search Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/Binary_search_tree"},
+            {name:"AVL Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/AVL_tree"},
+            {name:"Red-Black Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"},
+            {name:"B-Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/B-tree"},
+            {name:"Heap",level:"datastructure",url:"https://en.wikipedia.org/wiki/Heap_(data_structure)"},
+            {name:"Graph",level:"datastructure",url:"https://en.wikipedia.org/wiki/Graph_(abstract_data_type)"},
+            {name:"Trie",level:"datastructure",url:"https://en.wikipedia.org/wiki/Trie"},
+            {name:"Segment Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/Segment_tree"},
+            {name:"Fenwick Tree",level:"datastructure",url:"https://en.wikipedia.org/wiki/Fenwick_tree"},
+            {name:"Disjoint Set",level:"datastructure",url:"https://en.wikipedia.org/wiki/Disjoint-set_data_structure"},
+            {name:"Bloom Filter",level:"datastructure",url:"https://en.wikipedia.org/wiki/Bloom_filter"}
+          ]
+        };
+      }
+
+      // ──────────────────── BUILD MASSIVE TREE ────────────────────
+      function buildTreeData() {
+        return {
+          name:"Computer Science",
+          level:"root",
+          children:[
+            {
+              name:"💻 Programming Paradigms & Languages",
+              level:"domain",
+              children:[
+                { name:"Object-Oriented", level:"paradigm", children:[
+                  { name:"Java", level:"language", url:"https://en.wikipedia.org/wiki/Java_(programming_language)", children:[
+                    { name:"Spring Boot", level:"framework", url:"https://spring.io/projects/spring-boot" },
+                    { name:"Hibernate", level:"framework", url:"https://hibernate.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Java")
+                  ]},
+                  { name:"C++", level:"language", url:"https://en.wikipedia.org/wiki/C%2B%2B", children:[
+                    { name:"Qt", level:"framework", url:"https://www.qt.io/" },
+                    { name:"Boost", level:"framework", url:"https://www.boost.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("C++")
+                  ]},
+                  { name:"Python", level:"language", url:"https://www.python.org/", children:[
+                    { name:"Django", level:"framework", url:"https://www.djangoproject.com/" },
+                    { name:"Flask", level:"framework", url:"https://flask.palletsprojects.com/" },
+                    { name:"FastAPI", level:"framework", url:"https://fastapi.tiangolo.com/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Python")
+                  ]},
+                  { name:"C#", level:"language", url:"https://learn.microsoft.com/en-us/dotnet/csharp/", children:[
+                    { name:".NET/ASP.NET", level:"framework", url:"https://dotnet.microsoft.com/" },
+                    { name:"Blazor", level:"framework", url:"https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("C#")
+                  ]},
+                  { name:"Ruby", level:"language", url:"https://www.ruby-lang.org/", children:[
+                    { name:"Ruby on Rails", level:"framework", url:"https://rubyonrails.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Ruby")
+                  ]},
+                  { name:"Swift", level:"language", url:"https://developer.apple.com/swift/", children:[
+                    { name:"SwiftUI", level:"framework", url:"https://developer.apple.com/xcode/swiftui/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Swift")
+                  ]},
+                  { name:"Kotlin", level:"language", url:"https://kotlinlang.org/", children:[
+                    { name:"Ktor", level:"framework", url:"https://ktor.io/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Kotlin")
+                  ]},
+                  { name:"TypeScript", level:"language", url:"https://www.typescriptlang.org/", children:[
+                    { name:"Angular", level:"framework", url:"https://angular.io/" },
+                    { name:"NestJS", level:"framework", url:"https://nestjs.com/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("TypeScript")
+                  ]},
+                  { name:"Dart", level:"language", url:"https://dart.dev/", children:[
+                    { name:"Flutter", level:"framework", url:"https://flutter.dev/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Dart")
+                  ]},
+                  { name:"Groovy", level:"language", url:"https://groovy-lang.org/", children:[
+                    { name:"Grails", level:"framework", url:"https://grails.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Groovy")
+                  ]},
+                  { name:"Objective-C", level:"language", url:"https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/", children:[
+                    { name:"Cocoa", level:"framework", url:"https://developer.apple.com/documentation/cocoa" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Objective-C")
+                  ]},
+                  { name:"VB.NET", level:"language", url:"https://learn.microsoft.com/en-us/dotnet/visual-basic/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("VB.NET")
+                  ]},
+                  { name:"Eiffel", level:"language", url:"https://www.eiffel.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Eiffel")
+                  ]},
+                  { name:"Smalltalk", level:"language", url:"https://en.wikipedia.org/wiki/Smalltalk", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Smalltalk")
+                  ]},
+                ]},
+                { name:"Functional", level:"paradigm", children:[
+                  { name:"Haskell", level:"language", url:"https://www.haskell.org/", children:[
+                    { name:"Yesod", level:"framework", url:"https://www.yesodweb.com/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Haskell")
+                  ]},
+                  { name:"Scala", level:"language", url:"https://www.scala-lang.org/", children:[
+                    { name:"Akka", level:"framework", url:"https://akka.io/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Scala")
+                  ]},
+                  { name:"Elixir", level:"language", url:"https://elixir-lang.org/", children:[
+                    { name:"Phoenix", level:"framework", url:"https://www.phoenixframework.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Elixir")
+                  ]},
+                  { name:"Clojure", level:"language", url:"https://clojure.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Clojure")
+                  ]},
+                  { name:"F#", level:"language", url:"https://fsharp.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("F#")
+                  ]},
+                  { name:"OCaml", level:"language", url:"https://ocaml.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("OCaml")
+                  ]},
+                  { name:"Erlang", level:"language", url:"https://www.erlang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Erlang")
+                  ]},
+                  { name:"Elm", level:"language", url:"https://elm-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Elm")
+                  ]},
+                  { name:"PureScript", level:"language", url:"https://www.purescript.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("PureScript")
+                  ]},
+                  { name:"Racket", level:"language", url:"https://racket-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Racket")
+                  ]},
+                  { name:"Scheme", level:"language", url:"https://en.wikipedia.org/wiki/Scheme_(programming_language)", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Scheme")
+                  ]},
+                  { name:"Idris", level:"language", url:"https://www.idris-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode()
+                  ]},
+                  { name:"Agda", level:"language", url:"https://wiki.portal.chalmers.se/agda/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode()
+                  ]},
+                ]},
+                { name:"Procedural & Systems", level:"paradigm", children:[
+                  { name:"C", level:"language", url:"https://en.wikipedia.org/wiki/C_(programming_language)", children:[
+                    { name:"GTK+", level:"framework", url:"https://www.gtk.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("C")
+                  ]},
+                  { name:"Go", level:"language", url:"https://go.dev/", children:[
+                    { name:"Gin", level:"framework", url:"https://gin-gonic.com/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Go")
+                  ]},
+                  { name:"Rust", level:"language", url:"https://www.rust-lang.org/", children:[
+                    { name:"Actix Web", level:"framework", url:"https://actix.rs/" },
+                    { name:"Rocket", level:"framework", url:"https://rocket.rs/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Rust")
+                  ]},
+                  { name:"Zig", level:"language", url:"https://ziglang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Zig")
+                  ]},
+                  { name:"Nim", level:"language", url:"https://nim-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Nim")
+                  ]},
+                  { name:"D", level:"language", url:"https://dlang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("D")
+                  ]},
+                  { name:"Assembly", level:"language", url:"https://en.wikipedia.org/wiki/Assembly_language", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Assembly")
+                  ]},
+                  { name:"Fortran", level:"language", url:"https://fortran-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Fortran")
+                  ]},
+                  { name:"Ada", level:"language", url:"https://www.adacore.com/about-ada", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Ada")
+                  ]},
+                  { name:"Crystal", level:"language", url:"https://crystal-lang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Crystal")
+                  ]},
+                  { name:"V", level:"language", url:"https://vlang.io/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("V")
+                  ]},
+                  { name:"Free Pascal", level:"language", url:"https://www.freepascal.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Free Pascal")
+                  ]},
+                  { name:"COBOL", level:"language", url:"https://en.wikipedia.org/wiki/COBOL", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("COBOL")
+                  ]},
+                  { name:"Forth", level:"language", url:"https://en.wikipedia.org/wiki/Forth_(programming_language)", children:[
+                    getAlgorithmsNode(), getDataStructuresNode()
+                  ]},
+                ]},
+                { name:"Scripting & Dynamic", level:"paradigm", children:[
+                  { name:"JavaScript", level:"language", url:"https://developer.mozilla.org/en-US/docs/Web/JavaScript", children:[
+                    { name:"React", level:"framework", url:"https://reactjs.org/" },
+                    { name:"Vue.js", level:"framework", url:"https://vuejs.org/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("JavaScript")
+                  ]},
+                  { name:"PHP", level:"language", url:"https://www.php.net/", children:[
+                    { name:"Laravel", level:"framework", url:"https://laravel.com/" },
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("PHP")
+                  ]},
+                  { name:"Perl", level:"language", url:"https://www.perl.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Perl")
+                  ]},
+                  { name:"Lua", level:"language", url:"https://www.lua.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Lua")
+                  ]},
+                  { name:"R", level:"language", url:"https://www.r-project.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("R")
+                  ]},
+                  { name:"Julia", level:"language", url:"https://julialang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Julia")
+                  ]},
+                  { name:"Tcl", level:"language", url:"https://www.tcl.tk/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Tcl")
+                  ]},
+                  { name:"Bash", level:"language", url:"https://www.gnu.org/software/bash/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Bash")
+                  ]},
+                  { name:"PowerShell", level:"language", url:"https://learn.microsoft.com/en-us/powershell/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("PowerShell")
+                  ]},
+                  { name:"MATLAB", level:"language", url:"https://www.mathworks.com/products/matlab.html", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("MATLAB")
+                  ]},
+                  { name:"SAS", level:"language", url:"https://www.sas.com/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode()
+                  ]},
+                  { name:"Stata", level:"language", url:"https://www.stata.com/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode()
+                  ]},
+                ]},
+                { name:"Declarative & Logic", level:"paradigm", children:[
+                  { name:"SQL", level:"language", url:"https://en.wikipedia.org/wiki/SQL", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("SQL")
+                  ]},
+                  { name:"Prolog", level:"language", url:"https://www.swi-prolog.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Prolog")
+                  ]},
+                ]},
+                { name:"Concurrent & Event-Driven", level:"paradigm", children:[
+                  { name:"Node.js", level:"language", url:"https://nodejs.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Node.js")
+                  ]},
+                  { name:"Deno", level:"language", url:"https://deno.land/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Deno")
+                  ]},
+                ]},
+                { name:"Smart Contracts", level:"paradigm", children:[
+                  { name:"Solidity", level:"language", url:"https://soliditylang.org/", children:[
+                    getAlgorithmsNode(), getDataStructuresNode(), getToolsNode("Solidity")
+                  ]},
+                ]},
+              ]
+            },
+            {
+              name:"🗄️ Databases",
+              level:"domain",
+              children:[
+                { name:"Relational", level:"database-category", children:[
+                  {name:"PostgreSQL",level:"database",url:"https://www.postgresql.org/"},
+                  {name:"MySQL",level:"database",url:"https://www.mysql.com/"},
+                  {name:"SQLite",level:"database",url:"https://www.sqlite.org/"},
+                  {name:"Oracle DB",level:"database",url:"https://www.oracle.com/database/"},
+                  {name:"Microsoft SQL Server",level:"database",url:"https://www.microsoft.com/en-us/sql-server/"}
+                ]},
+                { name:"NoSQL", level:"database-category", children:[
+                  {name:"MongoDB",level:"database",url:"https://www.mongodb.com/"},
+                  {name:"Cassandra",level:"database",url:"https://cassandra.apache.org/"},
+                  {name:"Redis",level:"database",url:"https://redis.io/"},
+                  {name:"CouchDB",level:"database",url:"https://couchdb.apache.org/"},
+                  {name:"Neo4j",level:"database",url:"https://neo4j.com/"},
+                  {name:"DynamoDB",level:"database",url:"https://aws.amazon.com/dynamodb/"}
+                ]},
+                { name:"NewSQL", level:"database-category", children:[
+                  {name:"CockroachDB",level:"database",url:"https://www.cockroachlabs.com/"},
+                  {name:"TiDB",level:"database",url:"https://pingcap.com/"}
+                ]},
+                { name:"Time Series", level:"database-category", children:[
+                  {name:"InfluxDB",level:"database",url:"https://www.influxdata.com/"},
+                  {name:"TimescaleDB",level:"database",url:"https://www.timescale.com/"}
+                ]}
+              ]
+            },
+            {
+              name:"🌐 Networking & Protocols",
+              level:"domain",
+              children:[
+                { name:"Models", level:"network-category", children:[
+                  {name:"OSI Model",level:"network",url:"https://en.wikipedia.org/wiki/OSI_model"},
+                  {name:"TCP/IP",level:"network",url:"https://en.wikipedia.org/wiki/Internet_protocol_suite"}
+                ]},
+                { name:"Protocols", level:"network-category", children:[
+                  {name:"HTTP/HTTPS",level:"network",url:"https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"},
+                  {name:"WebSocket",level:"network",url:"https://en.wikipedia.org/wiki/WebSocket"},
+                  {name:"DNS",level:"network",url:"https://en.wikipedia.org/wiki/Domain_Name_System"},
+                  {name:"FTP",level:"network",url:"https://en.wikipedia.org/wiki/File_Transfer_Protocol"},
+                  {name:"SMTP",level:"network",url:"https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol"},
+                  {name:"SSH",level:"network",url:"https://en.wikipedia.org/wiki/Secure_Shell"}
+                ]}
+              ]
+            },
+            {
+              name:"🖥️ Operating Systems",
+              level:"domain",
+              children:[
+                {name:"Linux",level:"os",url:"https://www.kernel.org/"},
+                {name:"Windows",level:"os",url:"https://www.microsoft.com/windows"},
+                {name:"macOS",level:"os",url:"https://www.apple.com/macos/"},
+                {name:"Unix",level:"os",url:"https://en.wikipedia.org/wiki/Unix"},
+                {name:"FreeBSD",level:"os",url:"https://www.freebsd.org/"}
+              ]
+            },
+            {
+              name:"🔒 Cybersecurity",
+              level:"domain",
+              children:[
+                { name:"Encryption", level:"security-category", children:[
+                  {name:"AES",level:"algo",url:"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard"},
+                  {name:"RSA",level:"algo",url:"https://en.wikipedia.org/wiki/RSA_(cryptosystem)"},
+                  {name:"SHA",level:"algo",url:"https://en.wikipedia.org/wiki/Secure_Hash_Algorithms"}
+                ]},
+                { name:"Tools", level:"tool-category", children:[
+                  {name:"Wireshark",level:"tool",url:"https://www.wireshark.org/"},
+                  {name:"Nmap",level:"tool",url:"https://nmap.org/"},
+                  {name:"Metasploit",level:"tool",url:"https://www.metasploit.com/"},
+                  {name:"Burp Suite",level:"tool",url:"https://portswigger.net/burp"}
+                ]}
+              ]
+            },
+            {
+              name:"🤖 Artificial Intelligence",
+              level:"domain",
+              children:[
+                { name:"Frameworks", level:"tool-category", children:[
+                  {name:"TensorFlow",level:"framework",url:"https://www.tensorflow.org/"},
+                  {name:"PyTorch",level:"framework",url:"https://pytorch.org/"},
+                  {name:"scikit-learn",level:"framework",url:"https://scikit-learn.org/"},
+                  {name:"Keras",level:"framework",url:"https://keras.io/"},
+                  {name:"JAX",level:"framework",url:"https://jax.readthedocs.io/"}
+                ]},
+                { name:"Algorithms", level:"algo-category", children:[
+                  {name:"Linear Regression",level:"algo",url:"https://en.wikipedia.org/wiki/Linear_regression"},
+                  {name:"SVM",level:"algo",url:"https://en.wikipedia.org/wiki/Support_vector_machine"},
+                  {name:"CNN",level:"algo",url:"https://en.wikipedia.org/wiki/Convolutional_neural_network"},
+                  {name:"RNN",level:"algo",url:"https://en.wikipedia.org/wiki/Recurrent_neural_network"},
+                  {name:"Transformer",level:"algo",url:"https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)"}
+                ]}
+              ]
+            },
+            {
+              name:"🛠️ Software Engineering",
+              level:"domain",
+              children:[
+                { name:"Version Control", level:"tool-category", children:[
+                  {name:"Git",level:"tool",url:"https://git-scm.com/"},
+                  {name:"GitHub",level:"tool",url:"https://github.com/"},
+                  {name:"GitLab",level:"tool",url:"https://about.gitlab.com/"},
+                  {name:"Bitbucket",level:"tool",url:"https://bitbucket.org/"}
+                ]},
+                { name:"CI/CD", level:"tool-category", children:[
+                  {name:"Jenkins",level:"tool",url:"https://www.jenkins.io/"},
+                  {name:"GitHub Actions",level:"tool",url:"https://github.com/features/actions"},
+                  {name:"GitLab CI",level:"tool",url:"https://docs.gitlab.com/ee/ci/"},
+                  {name:"CircleCI",level:"tool",url:"https://circleci.com/"},
+                  {name:"Travis CI",level:"tool",url:"https://www.travis-ci.com/"}
+                ]},
+                { name:"Methodologies", level:"concept", children:[
+                  {name:"Agile",level:"concept",url:"https://en.wikipedia.org/wiki/Agile_software_development"},
+                  {name:"Scrum",level:"concept",url:"https://en.wikipedia.org/wiki/Scrum_(software_development)"},
+                  {name:"Kanban",level:"concept",url:"https://en.wikipedia.org/wiki/Kanban_(development)"},
+                  {name:"DevOps",level:"concept",url:"https://en.wikipedia.org/wiki/DevOps"}
+                ]}
+              ]
+            },
+            {
+              name:"📐 Theory of Computation",
+              level:"domain",
+              children:[
+                {name:"Turing Machine",level:"theory",url:"https://en.wikipedia.org/wiki/Turing_machine"},
+                {name:"Lambda Calculus",level:"theory",url:"https://en.wikipedia.org/wiki/Lambda_calculus"},
+                {name:"Finite Automata",level:"theory",url:"https://en.wikipedia.org/wiki/Finite-state_machine"},
+                {name:"P vs NP",level:"theory",url:"https://en.wikipedia.org/wiki/P_versus_NP_problem"},
+                {name:"Computability",level:"theory",url:"https://en.wikipedia.org/wiki/Computability"}
+              ]
+            },
+            {
+              name:"🧠 Computer Architecture",
+              level:"domain",
+              children:[
+                {name:"CPU",level:"hardware",url:"https://en.wikipedia.org/wiki/Central_processing_unit"},
+                {name:"GPU",level:"hardware",url:"https://en.wikipedia.org/wiki/Graphics_processing_unit"},
+                {name:"Memory Hierarchy",level:"hardware",url:"https://en.wikipedia.org/wiki/Memory_hierarchy"},
+                {name:"Instruction Set",level:"hardware",url:"https://en.wikipedia.org/wiki/Instruction_set_architecture"},
+                {name:"Pipelining",level:"hardware",url:"https://en.wikipedia.org/wiki/Instruction_pipelining"}
+              ]
+            }
+          ]
+        };
+      }
+
+      const treeData = buildTreeData();
+
+      // ──────────────────── COLORS (soft grays) ────────────────────
+      const levelColors = {
+        root: "#1f1f1f",
+        domain: "#2b2b2b",
+        paradigm: "#333333",
+        language: "#3d3d3d",
+        framework: "#474747",
+        "algo-category": "#525252",
+        algo: "#5c5c5c",
+        "datastructure-category": "#4a4a4a",
+        datastructure: "#5e5e5e",
+        "tool-category": "#555555",
+        tool: "#636363",
+        "database-category": "#4a4a4a",
+        database: "#5e5e5e",
+        "network-category": "#4a4a4a",
+        network: "#5e5e5e",
+        os: "#555555",
+        "security-category": "#4a4a4a",
+        concept: "#5e5e5e",
+        theory: "#5e5e5e",
+        hardware: "#5e5e5e"
+      };
+      function getColor(d) { return levelColors[d.data.level] || "#4a4a4a"; }
+
+      // ──────────────────── SVG & D3 SETUP ────────────────────
+      const svg = d3.select("#chart");
+      const gRoot = svg.append("g");
+      const width = window.innerWidth, height = window.innerHeight;
+      svg.attr("width", width).attr("height", height);
+
+      const zoom = d3.zoom().scaleExtent([0.15, 3.0]).on("zoom", (e) => gRoot.attr("transform", e.transform));
+      svg.call(zoom);
+      svg.call(zoom.transform, d3.zoomIdentity.translate(140, height/2).scale(0.65));
+
+      const treeLayout = d3.tree().nodeSize([46, 270]).separation((a,b) => (a.parent===b.parent?1.3:1.8));
+      let root = d3.hierarchy(treeData);
+      // initial collapse: show domains, hide deeper
+      root.children.forEach(d => {
+        if(d.children) d.children.forEach(c => {
+          if(c.children) { c._children = c.children; c.children = null; }
+        });
+      });
+
+      const searchInput = document.getElementById("search-input");
+      const clearBtn = document.getElementById("clear-search");
+      let searchTerm = "";
+      const dataNodeMap = new Map();
+      function mapAllNodes(node) {
+        if(node.data) dataNodeMap.set(node.data, node);
+        if(node.children) node.children.forEach(mapAllNodes);
+        if(node._children) node._children.forEach(mapAllNodes);
+      }
+
+      function curvedPath(s,t) {
+        const mx = (s.y+t.y)/2;
+        return `M${s.y},${s.x} C${mx},${s.x} ${mx},${t.x} ${t.y},${t.x}`;
+      }
+
+      function update() {
+        treeLayout(root);
+        const desc = root.descendants(), links = root.links();
+        // Links
+        const link = gRoot.selectAll(".link").data(links, d=>d.target.data.name+"->"+d.source.data.name);
+        link.exit().remove();
+        link.enter().append("path").attr("class","link").attr("d",d=>curvedPath(d.source,d.target));
+        link.attr("class", d=> "link"+(searchTerm&&d.target.data.name.toLowerCase().includes(searchTerm)?" highlight-link":"") )
+          .transition().duration(400).attr("d",d=>curvedPath(d.source,d.target));
+        // Nodes
+        const node = gRoot.selectAll(".node-group").data(desc, d=>d.data.name+"@"+d.depth+(d.parent?d.parent.data.name:""));
+        node.exit().remove();
+        const nodeEnter = node.enter().append("g").attr("class","node-group").attr("transform",d=>`translate(${d.y},${d.x})`);
+        nodeEnter.append("rect").attr("class","node-rect").attr("x",-100).attr("y",-16).attr("width",200).attr("height",32).attr("rx",16).attr("ry",16).attr("fill",d=>getColor(d));
+        nodeEnter.append("text").attr("class","node-text").attr("text-anchor","middle").attr("dy",5).text(d=>d.data.name);
+        nodeEnter.each(function(d){ if(d.data.url){ d3.select(this).append("text").attr("class","external-icon").attr("dy",5).attr("font-size","13px").attr("dx",60).text("↗").on("click",(ev)=>{ev.stopPropagation(); window.open(d.data.url,"_blank");}); } });
+        nodeEnter.on("click",(ev,d)=>{
+          ev.stopPropagation();
+          if(!d.children&&!d._children){ if(d.data.url) window.open(d.data.url,"_blank"); return; }
+          if(d.children){ d._children=d.children; d.children=null; }else if(d._children){ d.children=d._children; d._children=null; }
+          update(); mapAllNodes(root);
+        });
+        const nodeMerge = node.merge(nodeEnter);
+        nodeMerge.transition().duration(400).attr("transform",d=>`translate(${d.y},${d.x})`);
+        nodeMerge.each(function(d){
+          const g=d3.select(this), bbox=g.select(".node-text").node().getBBox();
+          const rw=Math.max(100,bbox.width+44); g.select(".node-rect").attr("x",-rw/2).attr("width",rw);
+          const ext=g.select(".external-icon"); if(!ext.empty()) ext.attr("dx",rw/2-12);
+        });
+        nodeMerge.select(".node-rect").attr("class",d=>"node-rect"+(searchTerm&&d.data.name.toLowerCase().includes(searchTerm)?" highlight":""));
+        nodeMerge.each(function(d){ if(d.depth===0) d3.select(this).classed("root-node-group",true); else d3.select(this).classed("root-node-group",false); });
+        let mx=0,my=0; desc.forEach(d=>{if(d.y+350>mx)mx=d.y+350; if(d.x+150>my)my=d.x+150;});
+        svg.attr("viewBox",`0 0 ${Math.max(width,mx)} ${Math.max(height,my)}`);
+      }
+
+      function expandAncestors(dn) {
+        let cur=dn; while(cur){ if(cur._children&&!cur.children){ cur.children=cur._children; cur._children=null; } cur=cur.parent; }
+      }
+      function performSearch(term) {
+        searchTerm=term.toLowerCase().trim();
+        if(searchTerm.length>=2){
+          const matched=[]; dataNodeMap.forEach((dn,data)=>{ if(data.name.toLowerCase().includes(searchTerm)) matched.push(dn); });
+          matched.forEach(expandAncestors); treeLayout(root);
+        }
+        update(); mapAllNodes(root); clearBtn.style.display=searchTerm.length>0?"block":"none";
+      }
+      searchInput.addEventListener("input",()=>performSearch(searchInput.value));
+      clearBtn.addEventListener("click",()=>{ searchInput.value=""; performSearch(""); });
+      document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ searchInput.value=""; performSearch(""); searchInput.blur(); } });
+
+      mapAllNodes(root); update();
+      window.addEventListener("resize",()=>{ svg.attr("width",window.innerWidth).attr("height",window.innerHeight); update(); });
+    })();
+  </script>
+
+</body></html>
